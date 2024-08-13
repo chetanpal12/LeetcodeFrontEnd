@@ -1,0 +1,37 @@
+[
+    {
+        "language": "JAVA",
+        "startSnippet": "//{ Driver Code Starts\n// Initial Template for Java\n\nimport java.io.*;\nimport java.util.*;\n\nclass Main {\n    public static void main(String[] args) throws IOException {\n        Scanner sc= new Scanner(System.in);\n        int t=sc.nextInt();\n        Solution ob=new Solution();\n        System.out.println(ob.cube(t));\n    }\n}\n// } Driver Code Ends",
+        "endSnippet": "",
+        "userSnippet": "class Solution {\n\n    // Note that the size of the array is n-1\n    int cube(int n) {\n\n        // Your Code Here\n        return n*n*n;\n    }\n}",
+        "_id": "66afc6bb9cf2fb88448b53d8"
+    }
+]
+
+
+
+//{ Driver Code Starts
+// Initial Template for Java
+
+// import java.io.*;
+// import java.util.*;
+
+// class Main {
+//     public static void main(String[] args) throws IOException {
+//         Scanner sc= new Scanner(System.in);
+//         int t=sc.nextInt();
+//         Solution ob=new Solution();
+//         System.out.println(ob.cube(t));
+//     }
+// }
+// } Driver Code Ends
+
+// class Solution {
+
+//     int cube(int n) {
+
+//         return n*n*n;
+//     }
+// }
+
+
