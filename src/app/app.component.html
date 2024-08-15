@@ -80,7 +80,7 @@
             </select>
           </div>
           <div class="row d-flex align-items-center" >
-            <button type="button" class="btn center-button" (click)="onGetCode()">Submit</button>
+            <button type="button" class="btn center-button" (click)="onSubmit()">Submit</button>
           </div>
           <div>
             <label for="theme-select">Select Theme:</label>
@@ -115,3 +115,5 @@
     </div>
   </div>
 </div>
+
+<ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "medium" color = "#fff" type = "ball-atom" [fullScreen] = "true"><p style="color: white" > Loading... </p></ngx-spinner>

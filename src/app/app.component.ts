@@ -3,6 +3,8 @@ import { BaseServiceService } from './services/base-service.service';
 import { environments } from './enviroments/enviroments';
 import { SocketIoService } from './services/socket-io.service';
 import { Subscription } from 'rxjs';
+import { NgxSpinnerService } from "ngx-spinner";
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-root',
@@ -23,20 +25,34 @@ export class AppComponent implements OnInit,OnDestroy {
    
   //  userId = "1";
 
-  constructor(private Service:BaseServiceService,private socketService: SocketIoService){
+  constructor(private Service:BaseServiceService,private socketService: SocketIoService,private loader: NgxSpinnerService,
+    private alert: ToastrService
+  ){
     console.log(environments.apiURL);
     // this.initializeSocket();
   }
 
   ngOnInit(): void {
+    this.loader.show();
+    this.alert.success("heyy done it ");
     this.Service.getData('/api/v1/problems').subscribe((res:any)=>{
       console.log(res);
     });
+    setTimeout(() => {
+      this.loader.hide()
+    }, 1000);
 
     this.subscription.add(
       this.socketService.listenToSubmissionResponse().subscribe(
         (data: any) => {
           console.log('Received data from WebSocket:', data);
+          this.loader.hide();
+          if(data.response.status=="SUCCESS"){
+            this.alert.success(data.response.status);
+          }else{
+            this.alert.error(data.response.status);
+          }
+          
           // Handle the received data as needed
         },
         (error) => {
@@ -85,19 +101,30 @@ export class AppComponent implements OnInit,OnDestroy {
     };
   }
 
-  onGetCode() {
-    const payload={
-      code:this.code,
-      language:this.language,
-      userId:this.userId,
-      problemId:this.problemId
+  onSubmit() {
+    try {
+      this.loader.show();
+      const payload={
+        code:this.code,
+        language:this.language,
+        userId:this.userId,
+        problemId:this.problemId
 
-    }
-    console.log("code is -->>",this.code);
-    console.log("paylaod",payload);
-    this.Service.postData('/api/v1/submissions',payload).subscribe((res:any)=>{
-      console.log(res);
-    })
+      }
+      console.log("code is -->>",this.code);
+      console.log("paylaod",payload);
+      this.Service.postData('/api/v1/submissions',payload).subscribe((res:any)=>{
+        if(res.success){
+          this.alert.success(res.message);
+        }else{
+          this.loader.hide();
+        }
+      })
+      } catch (error:any) {
+        this.loader.hide();
+        this.alert.error(error);
+      }
+    
   }
 
   // initializeSocket(): void {
